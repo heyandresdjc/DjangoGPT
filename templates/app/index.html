@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+	<div class="container-fluid p-3">
+        <div class="row">
+            <div class="col-3">
+                <ul class="list-group">
+                    {% for question in questions %}
+                        <li class="list-group-item">
+                            {{ question }}
+                            <span class="badge text-bg-primary rounded-pill">
+                                {{ question.created_at }}
+                            </span>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No question</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-9">
+                <ul class="list-group">
+                    {% for answer in answers %}
+                        <li class="list-group-item">
+                            {{ answer|safe }}
+                        </li>
+                    {% endfor %}
+
+                    <li class="list-group-item">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col">
+                                    {{form.question}}
+                                </div>
+                                <div class="col-2">
+                                    <button type="submit" class="btn btn-large btn-success">
+                                        Send
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
